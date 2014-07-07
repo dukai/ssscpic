@@ -111,6 +111,7 @@ var PhotoAlbum = function(options){
 
 PhotoAlbum.prototype = {
 	_initPhotoAlbum: function(options){
+		EventEmitter.call(this);
 		this.options = {
 			container: '',
 			imglist: [],
@@ -133,9 +134,19 @@ PhotoAlbum.prototype = {
 	
 	_initEvents: function(){
 		var self = this;
+		
+		//绑定prev事件
+		
+		
+		//绑定next事件
+		
+		
+		//绑定列表事件
+			//绑定列表内部事件，分别为，显示指定内容，上一个，下一个
 	},
 
 	next: function(){
+		this.emit('beforenext', {pointer: this.pointer});
 		if(this.pointer >= this.length - 1){
 			this.pointer++;
 		}
@@ -144,6 +155,7 @@ PhotoAlbum.prototype = {
 	},
 
 	prev: function(){
+		this.emit('beforeprev', {pointer: this.pointer});
 		if(this.pointer > 0)
 			this.pointer--;
 			
@@ -166,6 +178,7 @@ PhotoAlbum.prototype = {
 
 };
 
+extend(PhotoAlbum, EventEmitter);
 
 
 
