@@ -260,10 +260,21 @@ PhotoAlbum.prototype = {
 	//更新图片列表
 	updateListUI: function(result){
 		//判断是否显示上一页按钮
+		if(result.prev){
+			//添加上一页按钮
+		}
 
 		//生成列表
 
+		for(var i = result.min; i <= result.max; i++){
+			//循环生成列表
+		}
+
 		//判断是否显示下一页按钮
+		if(result.next){
+			//添加下一页按钮
+		}
+
 	},
 
 	end: function(){
