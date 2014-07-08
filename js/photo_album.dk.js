@@ -1,15 +1,15 @@
 var imglist = [
 	{
-		img_big: 'http://testattach-scimg-cn.b0.upaiyun.com/album/201406/24/182254wh2orrkmf11zix1r.jpg',
-		img_small: 'http://testattach-scimg-cn.b0.upaiyun.com/album/201406/24/182254wh2orrkmf11zix1r.jpg',
-		img_orig: 'http://testattach-scimg-cn.b0.upaiyun.com/album/201406/24/182254wh2orrkmf11zix1r.jpg',
+		img_big: 'http://yeelink-files.b0.upaiyun.com/yeelink/resource/images/qs_1.jpg',
+		img_small: 'http://yeelink-files.b0.upaiyun.com/yeelink/resource/images/qs_1.jpg',
+		img_orig: 'http://yeelink-files.b0.upaiyun.com/yeelink/resource/images/qs_1.jpg',
 		intro: '近日，山东大学一组模仿类恶搞毕业照曝红网络，图片多是模仿电影海报类“对比照”，上传到社交媒体后便迅速获得过万点赞。'
 		
 	},
 	{
-		img_big: 'http://testattach-scimg-cn.b0.upaiyun.com/album/201406/27/095100ij1xjnt8313108zj.jpg',
-		img_small: 'http://testattach-scimg-cn.b0.upaiyun.com/album/201406/27/095100ij1xjnt8313108zj.jpg',
-		img_orig: 'http://testattach-scimg-cn.b0.upaiyun.com/album/201406/27/095100ij1xjnt8313108zj.jpg',
+		img_big: 'http://yeelink-files.b0.upaiyun.com/yeelink/resource/images/qs_2.jpg',
+		img_small: 'http://yeelink-files.b0.upaiyun.com/yeelink/resource/images/qs_2.jpg',
+		img_orig: 'http://yeelink-files.b0.upaiyun.com/yeelink/resource/images/qs_2.jpg',
 		intro: '组模仿类恶搞毕业照曝红网络，图片多是模仿电影海报类“对比照”，上传到社交媒体后便迅速获得过万点赞。'
 	}
 ];
@@ -38,6 +38,34 @@ var albumInfo = {
 
 };
 
+var extend = function(subClass, baseClass){
+	subClass.parentConstructor = baseClass;
+	subClass.parent = {};
+
+	baseClass.call(subClass.parent);
+
+
+	for(var method in baseClass.prototype){
+		subClass.prototype[method] = subClass.parent[method] = baseClass.prototype[method];
+	}
+};
+
+window.extend = extend;
+
+var mix = function(base, child, deep){
+    var o = new Object();
+    for(var key in base){
+        o[key] = base[key];
+    }
+    for(var key in child){
+		if(deep && isPlainObject(o[key])){
+			o[key] = mix(o[key], child[key]);
+		}else{
+			o[key] = child[key];
+		}
+    }
+    return o;
+};
 
 var EventEmitter = function(){
 	this._initEventEmitter();
@@ -114,14 +142,24 @@ PhotoAlbum.prototype = {
 		EventEmitter.call(this);
 		this.options = {
 			container: '',
+			next: '',
+			prev: '',
+			loading: '',
 			imglist: [],
 			albumInfo: {}
 		};
 		this.options = mix(this.options, options);
 		//current pointer to the image
 		this.pointer = 0;
-		this.length = this.options.imglist.length;
+		this.total = this.options.imglist.length;
+		this.totalPage = this.getTotalPage();
+		
+		this.listPager = new ListPager(this.totalPage);
 		this.panel = $(this.options.container);
+		
+		this._initUI();
+
+		this._initEvents();
 	},
 	
 	_initUI: function(){
@@ -132,14 +170,27 @@ PhotoAlbum.prototype = {
 		this.show(0);
 	},
 	
+	
 	_initEvents: function(){
 		var self = this;
 		
 		//绑定prev事件
-		
+		this.panel.find(this.options.prev).click(function(){
+			self.prev();
+		});
 		
 		//绑定next事件
-		
+		this.panel.find(this.options.next).click(function(){
+			self.next();
+		});
+
+		this.listPager.on('next', function(e){
+			self.updateListUI(e);
+		});
+
+		this.listPager.on('prev', function(e){
+			self.updateListUI(e);
+		});
 		
 		//绑定列表事件
 			//绑定列表内部事件，分别为，显示指定内容，上一个，下一个
@@ -147,7 +198,7 @@ PhotoAlbum.prototype = {
 
 	next: function(){
 		this.emit('beforenext', {pointer: this.pointer});
-		if(this.pointer >= this.length - 1){
+		if(this.pointer >= this.total - 1){
 			this.pointer++;
 		}
 		
@@ -161,13 +212,58 @@ PhotoAlbum.prototype = {
 			
 		this.show(this.pointer);
 	},
+	
+	go: function(pointer){
+		this.emit('beforego', {pointer: this.pointer});
+		this.pointer = pointer;
+		
+		this.show(this.pointer);
+	}
 
-	show: function(){
-		//change the image src
+	show: function(pointer){
+		var self = this;
+		//显示加载动画
+		this.showLoading();
+		//加载完后显示图片（替换src）
+		var imgres = this.options.imglist[pointer];
+
+		//TODO: 需要判断是否有图片在加载，如果有的话取消旧的图片，加载新的图片
+
+		var img = new Image();
+		self.imgLoading = true;
+		img.onload = function(){
+			self.imgLoading = false;
+		};
+		
+		img.onerror = function(){
+			self.imgLoading = false;
+		};
+		
+		img.src = "";
+	},
+	
+	showLoading: function(){
+		//显示加载动画
+		this.panel.find(this.options.loading).show();
+	},
+	
+	hideLoading: function(){
+		//隐藏加载动画
+		this.panel.find(this.options.loading).hide();
 	},
 
 	showList: function(){
 		//根据pointer计算位置
+		var result = this.listPager.buildResult(this.listPager.getCurrentPage(this.pointer));
+		this.updateListUI(result);
+	},
+	//更新图片列表
+	updateListUI: function(result){
+		//判断是否显示上一页按钮
+
+		//生成列表
+
+		//判断是否显示下一页按钮
 	},
 
 	end: function(){
@@ -181,7 +277,104 @@ PhotoAlbum.prototype = {
 extend(PhotoAlbum, EventEmitter);
 
 
+var ListPager = function(total){
+	this.total = total;
+	this._initListPager();
+};
 
+
+ListPager.prototype = {
+	_initListPager: function(){
+		EventEmitter.call(this);
+		this.totalPage = this.getTotalPage();
+		this.page = 1;
+	},
+	//获取总页面数目
+	getTotalPage: function(){
+		var totalPage;
+		if(this.total <= 12){
+			totalPage = 1;
+		}else if(this.total <= 22 && this.total > 12){
+			totalPage = 2;
+		}else{
+			totalPage = Math.ceil((this.total - 22) / 10) + 2;
+		}
+		return totalPage;
+	},
+
+	next: function(){
+		if(this.page < this.totalPage){
+			this.page ++;
+		}
+		var result = this.buildResult(this.page);
+		this.emit("next", result)
+		return result;
+	},
+
+	prev: function(){
+		if(this.page > 1){
+			this.page --;
+		}
+		var result = this.buildResult(this.page);
+		this.emit("next", result)
+		return result;
+	},
+
+	buildResult: function(page){
+		var result = {
+			page: page,
+			max: -1, 
+			min: -1,
+			prev: false,
+			next: false
+		};
+
+
+		if(this.total <= 12){
+			result.page = 1;
+			result.max = this.total - 1;
+			result.min = 0;
+			result.prev = false;
+			result.next = false;
+		}else{
+			if(page >= this.totalPage){
+				result.max = this.total - 1;
+				result.min = (page - 1) * 10 + 1;
+				result.prev = true;
+				result.next = false;
+			}else if(page == 1){
+				result.max = page * 10;
+				result.min = 0;
+				result.prev = false;
+				result.next = true;
+			}else{
+				result.max = page * 10;
+				result.min = (page - 1) * 10 + 1;
+				result.prev = true;
+				result.next = true;
+			}
+		}
+
+		return result;
+	},
+	
+	getCurrentPage: function(pointer){
+		
+		if(this.total <= 12){
+			return 1;
+		}else{
+			var current = Math.floor(Math.abs(pointer - 1) / 10) + 1;
+			if(current >= this.totalPage){
+				return this.totalPage;
+			}else{
+				return current;
+			}
+		}
+
+	}
+};
+
+extend(ListPager, EventEmitter);
 
 
 
