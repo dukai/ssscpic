@@ -125,6 +125,48 @@ var imglist = [
 		img_small: 'http://d.hiphotos.baidu.com/image/pic/item/7dd98d1001e939010a20f7b479ec54e736d1961d.jpg',
 		img_orig: 'http://d.hiphotos.baidu.com/image/pic/item/7dd98d1001e939010a20f7b479ec54e736d1961d.jpg',
 		intro: '新加坡：北京“炮轰”日本 马英九打了助攻'
+	},
+	{
+		img_big: 'http://c.hiphotos.baidu.com/image/pic/item/4bed2e738bd4b31c55c19f2385d6277f9f2ff8ad.jpg',
+		img_small: 'http://c.hiphotos.baidu.com/image/pic/item/4bed2e738bd4b31c55c19f2385d6277f9f2ff8ad.jpg',
+		img_orig: 'http://c.hiphotos.baidu.com/image/pic/item/4bed2e738bd4b31c55c19f2385d6277f9f2ff8ad.jpg',
+		intro: 'JavaScript（常简称为JS）是一门轻量级，解释型，具有第一级函数的面向对象语言，向来以Web网页的脚本语言而著称，但现在也可以用在许多非浏览器环境，例如node.js或者Apache CouchDB。'
+	},
+	{
+		img_big: 'http://e.hiphotos.baidu.com/image/pic/item/37d12f2eb9389b500b39ebca8735e5dde6116e67.jpg',
+		img_small: 'http://e.hiphotos.baidu.com/image/pic/item/37d12f2eb9389b500b39ebca8735e5dde6116e67.jpg',
+		img_orig: 'http://e.hiphotos.baidu.com/image/pic/item/37d12f2eb9389b500b39ebca8735e5dde6116e67.jpg',
+		intro: 'JavaScript的标准是ECMAScript。进入2012年，所有现代主流浏览器都全面支持了ECMAScript 5.1版标准，旧有的浏览器至少都支持到了ECMAScript 3版。重量级的第六版标准也正在编制中。不同特性的新进展可以在dedicated wiki上跟进。'
+	},
+	{
+		img_big: 'http://b.hiphotos.baidu.com/image/pic/item/902397dda144ad34e099000bd2a20cf431ad851c.jpg',
+		img_small: 'http://b.hiphotos.baidu.com/image/pic/item/902397dda144ad34e099000bd2a20cf431ad851c.jpg',
+		img_orig: 'http://b.hiphotos.baidu.com/image/pic/item/902397dda144ad34e099000bd2a20cf431ad851c.jpg',
+		intro: '本区的网站内容主要集中在JavaScript语言本身的知识上，而不是网页端或者其他的宿主环境。关于网页端指定API的信息，请参考DOM。欲了解DOM和JavaScript是怎样在一起配合的，请移步DOM Reference。'
+	},
+	{
+		img_big: 'http://e.hiphotos.baidu.com/image/pic/item/ac345982b2b7d0a2b0fb8311c9ef76094b369a08.jpg',
+		img_small: 'http://e.hiphotos.baidu.com/image/pic/item/ac345982b2b7d0a2b0fb8311c9ef76094b369a08.jpg',
+		img_orig: 'http://e.hiphotos.baidu.com/image/pic/item/ac345982b2b7d0a2b0fb8311c9ef76094b369a08.jpg',
+		intro: 'The above is just one of the many ways in which preloading can help you speed up the response time of your JavaScript effects. Use the techniques outlined above in your site, and alter them where needed to fit your requirements. Good luck!'
+	},
+	{
+		img_big: 'http://c.hiphotos.baidu.com/image/pic/item/503d269759ee3d6dd77c02cc41166d224f4ade7b.jpg',
+		img_small: 'http://c.hiphotos.baidu.com/image/pic/item/503d269759ee3d6dd77c02cc41166d224f4ade7b.jpg',
+		img_orig: 'http://c.hiphotos.baidu.com/image/pic/item/503d269759ee3d6dd77c02cc41166d224f4ade7b.jpg',
+		intro: '我种下一颗种子/终于长出了果实/今天是个伟大日子/摘下星星送给你/拽下月亮送给你/让太阳每天为你升起'
+	},
+	{
+		img_big: 'http://f.hiphotos.baidu.com/image/pic/item/b812c8fcc3cec3fda963e6fdd488d43f869427dc.jpg',
+		img_small: 'http://f.hiphotos.baidu.com/image/pic/item/b812c8fcc3cec3fda963e6fdd488d43f869427dc.jpg',
+		img_orig: 'http://f.hiphotos.baidu.com/image/pic/item/b812c8fcc3cec3fda963e6fdd488d43f869427dc.jpg',
+		intro: '吃饭然后去健身房撸一把回来继续写代码'
+	},
+	{
+		img_big: 'http://a.hiphotos.baidu.com/image/pic/item/2fdda3cc7cd98d10910ed1a6233fb80e7aec904b.jpg',
+		img_small: 'http://a.hiphotos.baidu.com/image/pic/item/2fdda3cc7cd98d10910ed1a6233fb80e7aec904b.jpg',
+		img_orig: 'http://a.hiphotos.baidu.com/image/pic/item/2fdda3cc7cd98d10910ed1a6233fb80e7aec904b.jpg',
+		intro: '朝鲜百人拉拉队将赴韩国 个个年轻貌美"思想过关"'
 	}
 ];
 
@@ -299,6 +341,10 @@ PhotoAlbum.prototype = {
 
 		this.panel.find('.yeshu i').html(this.total);
 
+		//hide images thumbnails list
+
+		this.panel.find('.tulcomplt').hide();
+
 		//显示图集第一张图片
 		this.go(0);
 	},
@@ -329,6 +375,10 @@ PhotoAlbum.prototype = {
 			self.panel.find('.intro').html(e.imageInfo.intro);
 			self.panel.find('.yeshu span').html(e.pointer + 1);
 		});
+
+		this.panel.find('.sigez.tplb').click(function(){
+			self.showList();
+		})
 		//绑定列表事件
 			//绑定列表内部事件，分别为，显示指定内容，上一个，下一个
 	},
@@ -395,7 +445,7 @@ PhotoAlbum.prototype = {
 			image: img
 		})
 		this.loadingImage = img;
-		
+
 		img.src = imgres.img_big;
 	},
 
@@ -451,22 +501,31 @@ PhotoAlbum.prototype = {
 	},
 	//更新图片列表
 	updateListUI: function(result){
+		var html = '';
 		//判断是否显示上一页按钮
 		if(result.prev){
 			//添加上一页按钮
+			html += '<p class="prev"> <a href="#" class="p_mec">上一页</a> </p>';
 		}
 
 		//生成列表
 
 		for(var i = result.min; i <= result.max; i++){
 			//循环生成列表
+
+			var imgRes = this.options.imglist[i];
+
+			html += '<p> <a href="" title=""><img width="170" height="170" border="0" alt="" src="' + imgRes.img_small + '"></a> <a href="#" title="" class="p_mec"></a> </p>'
 		}
 
 		//判断是否显示下一页按钮
 		if(result.next){
 			//添加下一页按钮
+			html += '<p class="next"> <a href="#" title="" class="p_mec">下一页</a> </p>';
 		}
 
+		this.panel.find('.tulcomplt .pics_lef').html(html);
+		this.panel.find('.tulcomplt').show();
 	},
 
 	end: function(){
