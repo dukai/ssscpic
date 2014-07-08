@@ -128,20 +128,20 @@
           <div class="picbtup_lef pr"> <a class="jiants leftjiant lefjtiant01"></a> <a class="jiants rightjiant rightjiant01"></a>
             <div class="tWrapper tWrapper01">
               <ul>
-                <li class="comxs comxs01"> <a href="#" title="" target="_blank"> <img src="http://testattach-scimg-cn.b0.upaiyun.com/album/201406/24/182254wh2orrkmf11zix1r.jpg" border="0" width="0" height="0" onload="auto_resize_image(0,460,this)" alt="" /> </a> </li>
-                <li class="comxs comxs01"> <a href="#" title="" target="_blank"> <img src="http://testattach-scimg-cn.b0.upaiyun.com/album/201406/27/095100ij1xjnt8313108zj.jpg" border="0" width="0" height="0" onload="auto_resize_image(0,460,this)" alt="" /> </a> </li>
+                <li class="comxs comxs01"> <a href="#" title="" target="_blank"> <img src="http://testattach-scimg-cn.b0.upaiyun.com/album/201406/24/182254wh2orrkmf11zix1r.jpg" border="0" width="0" height="0" alt="" /> </a> </li>
               </ul>
+              <div class="loading"></div>
             </div>
           </div>
           <div class="picbtup_rig">
             <div class="rigflsg rigflsg01">
               <div class="bqjs clearfix">
-                <div class="z_bqts">1标签</div>
-                <div class="z_bcon"><a href="#" title="" target="_blank">摄影师</a> <span>/</span> <a href="#" title="" target="_blank">肖像</a> <span>/</span> <a href="#" title="" target="_blank">遗言</a> </div>
+                <div class="z_bqts">标签</div>
+                <div class="z_bcon tags">载入中...</div>
               </div>
               <div class="bqjs bqjs01 clearfix">
                 <div class="z_bqts hov">简介</div>
-                <div class="z_bcon">近日，山东大学一组模仿类恶搞毕业照曝红网络，图片多是模仿电影海报类“对比照”，上传到社交媒体后便迅速获得过万点赞。 </div>
+                <div class="z_bcon intro">载入中...</div>
               </div>
               <div class="yeshu yeshu01"><span>1</span>/<i>0</i></div>
               <div class="fxbuts clearfix"> <a href="javascript:viod(0);" title="图片列表" target="_self" class="sigez tplb"></a> <a href="javascript:viod(0);" title="全屏浏览" target="_self" class="sigez qpck"></a> <a href="javascript:viod(0);" title="原图查看" target="_self" class="sigez ytck"></a> <div title="社交分享" class="sigez sjfx pr">
@@ -559,7 +559,17 @@
 
 <!-- 全屏结束 -->
 <div class="dawrap" style="display:none;"></div>
-<script type="text/javascript" src="js/oo.js"></script>
 <script type="text/javascript" src="js/photo_album.dk.js"></script>
+<script type="text/javascript">
+  new PhotoAlbum({
+    container: '#nyliul',
+    prev: '.leftjiant',
+    next: '.rightjiant',
+    loading: '.loading',
+    coverImage: '.tWrapper ul li.comxs img',
+    imglist: imglist,
+    albumInfo: albumInfo
+  });
+</script>
 </body>
 </html>
