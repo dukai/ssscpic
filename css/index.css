@@ -392,3 +392,6 @@
 .picbtup_lef .tWrapper{width:680px;height:460px;position: relative;}
 .picbtup_lef .tWrapper .loading{width:680px;height:460px;position: absolute;background: url(../images/loader.gif) center center no-repeat;left:0;top:0;}
 .pics_lef p .p_mec:hover{border:3px #66aa13 solid;}
+.pics_lef p.next .p_mec, .pics_lef p.prev .p_mec{height:170px;width:170px;line-height: 170px;font-size:16px;text-align:center;background: #555253;color:#fff;box-shadow: 0 0 10px rgba(0,0,0,.7) inset;transition: background-color .5s;}
+.pics_lef p.next .p_mec:hover, .pics_lef p.prev .p_mec:hover{background:#66aa13;text-align:center;border: 0 none;}
+.thumblist{position: absolute;left:0;top:0;background: #fff;z-index: 999;width:855px;}

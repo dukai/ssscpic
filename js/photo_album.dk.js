@@ -377,11 +377,25 @@ PhotoAlbum.prototype = {
 			self.panel.find('.yeshu span').html(e.pointer + 1);
 		});
 
-		this.panel.find('.sigez.tplb').click(function(){
+		this.panel.find('.sigez.tplb').click(function(e){
 			self.showList();
 		})
 		//绑定列表事件
 			//绑定列表内部事件，分别为，显示指定内容，上一个，下一个
+		this.panel.find(this.options.thumblist).click(function(e){
+			var action = e.target.getAttribute('action')
+
+			console.log(action);
+			if(action == 'prev'){
+				self.listPager.prev();
+			}else if(action == 'next'){
+				self.listPager.next();
+			}else{
+				action = parseInt(action);
+				self.go(action);
+				self.hideList();
+			}
+		});
 	},
 
 	next: function(){
@@ -500,13 +514,16 @@ PhotoAlbum.prototype = {
 		var result = this.listPager.buildResult(this.listPager.getCurrentPage(this.pointer));
 		this.updateListUI(result);
 	},
+	hideList: function(){
+		this.panel.find(this.options.thumblist).hide();
+	},
 	//更新图片列表
 	updateListUI: function(result){
 		var html = '';
 		//判断是否显示上一页按钮
 		if(result.prev){
 			//添加上一页按钮
-			html += '<p class="prev"> <a href="#" class="p_mec">上一页</a> </p>';
+			html += '<p class="prev"> <a href="#" class="p_mec" action="prev">上一页</a> </p>';
 		}
 
 		//生成列表
@@ -516,13 +533,13 @@ PhotoAlbum.prototype = {
 
 			var imgRes = this.options.imglist[i];
 
-			html += '<p> <a href="" title=""><img width="170" height="170" border="0" alt="" src="' + imgRes.img_small + '"></a> <a href="#" title="" class="p_mec"></a> </p>'
+			html += '<p> <a href="" title=""><img width="170" height="170" border="0" alt="" src="' + imgRes.img_small + '"></a> <a href="#" title="" class="p_mec" action="' + i + '"></a> </p>'
 		}
 
 		//判断是否显示下一页按钮
 		if(result.next){
 			//添加下一页按钮
-			html += '<p class="next"> <a href="#" title="" class="p_mec">下一页</a> </p>';
+			html += '<p class="next"> <a href="#" title="" class="p_mec" action="next">下一页</a> </p>';
 		}
 
 		this.panel.find('.tulcomplt .pics_lef').html(html);
