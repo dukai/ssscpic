@@ -139,9 +139,7 @@
 .picboxtits h3 .as2 a{color:#726f70;font-size:16px;font-family:Georgia;}
 .picboxtits  p{color:#726f70;font-size:12px;line-height:21px;height:60px;overflow:hidden;}
 .picboxtup{margin-left:74px;}
-.picbtup_lef{width:680px;height:460px;float:left;margin:30px 30px 0 30px;background:#f7f7f7;overflow:hidden;}
-.picbtup_lef .tWrapper{width:680px;height:460px;position: relative;}
-.picbtup_lef .tWrapper .loading{width:680px;height:460px;position: absolute;background: url(../images/loader.gif) center center no-repeat;left:0;top:0;}
+.picbtup_lef{width:680px;float:left;margin:30px 30px 0 30px;background:#f7f7f7;overflow:hidden;}
 .picbtup_rig{width:150px;float:left;margin-top:30px;height:470px;}
 .jiants{display:block;position:absolute;top:195px;width:70px;height:70px;cursor:pointer;cursor:hand;z-index:99;}
 .leftjiant{left:0px;background:url(../images/tujjt.gif) no-repeat left center;}
@@ -197,7 +195,6 @@
 .pics_lef p.hov a img{filter:alpha(opacity=100);-moz-opacity:100;-khtml-opacity:100;opacity:100;}
 .pics_lef p .p_mec{position:absolute;top:0;left:0;border:0;width:164px;height:164px;}
 .pics_lef p.hov .p_mec{border:3px #66aa13 solid;}
-.pics_lef p .p_mec:hover{border:3px #66aa13 solid;}
 .picjta{background:url(../images/jit.gif) center top no-repeat;width:60px;height:60px;}
 .picjtb{background:url(../images/jit.gif) center bottom no-repeat;width:60px;height:60px;}
 .picwa{text-align:center;color:#726f70;font-size:18px;line-height:22px;margin-bottom:95px;}
@@ -386,3 +383,12 @@
 .mRAdk_w{width:300px;height:455px;overflow:visible;position:relative;}
 .mRAdk{width:300px;overflow:hidden;}
 .mRAdk_hov{position:fixed;top:0;_position:absolute;}
+
+
+/*add by dk*/
+
+#nyliul{position:relative;}
+.picbtup_lef{width:680px;height:460px;float:left;margin:30px 30px 0 30px;background:#f7f7f7;overflow:hidden;}
+.picbtup_lef .tWrapper{width:680px;height:460px;position: relative;}
+.picbtup_lef .tWrapper .loading{width:680px;height:460px;position: absolute;background: url(../images/loader.gif) center center no-repeat;left:0;top:0;}
+.pics_lef p .p_mec:hover{border:3px #66aa13 solid;}
