@@ -173,21 +173,16 @@ var imglist = [
 var albumInfo = {
 
 	current: {
-		cover: 'http://testattach-scimg-cn.b0.upaiyun.com/album/201406/27/095100ij1xjnt8313108zj.jpg',
+		cover: 'http://ww3.sinaimg.cn/mw690/53a56655jw1egqqxnz2wsj21hc0zk1ky.jpg',
 		url: '',
 		length: '2',
 		title: '这是当前专题的标题',
 		tags: ['摄影师', '肖像', '遗言']
 	},
-	prev: {
-		cover: 'http://testattach-scimg-cn.b0.upaiyun.com/album/201406/27/095100ij1xjnt8313108zj.jpg',
-		url: '',
-		length: '12',
-		title: ''
-	},
+	prev: null,
 	next: {
-		cover: 'http://testattach-scimg-cn.b0.upaiyun.com/album/201406/27/095100ij1xjnt8313108zj.jpg',
-		url: '',
+		cover: 'http://ww3.sinaimg.cn/mw690/635191d5gw1ehi2a5yqg7j20sg0sjk19.jpg',
+		url: 'http://ww3.sinaimg.cn/mw690/635191d5gw1ehi2a5yqg7j20sg0sjk19.jpg',
 		length: '5',
 		title: '日本商家促销 女孩穿比基尼免费购物'
 	}
@@ -396,6 +391,11 @@ PhotoAlbum.prototype = {
 				self.hideList();
 			}
 		});
+
+		this.panel.find('.replay').click(function(){
+			self.panel.find('.albumend').hide();
+			self.go(0);
+		});
 	},
 
 	next: function(){
@@ -552,10 +552,28 @@ PhotoAlbum.prototype = {
 
 	end: function(){
 		//结束
+		this.emit("end", {});
+		this.panel.find('.albumend').show();
+		var albumInfo = this.options.albumInfo;
 		//显示广告
 		//显示上一个下一个
+		this.panel.find('.albumend .compnt_l img').attr('src', albumInfo.current.cover);
+		this.updateEndInfo('next');
+		this.updateEndInfo('prev');
+	},
 
-		console.log("END");
+	updateEndInfo: function(id){
+		var albumInfo = this.options.albumInfo;
+		if(this.options.albumInfo[id]){
+			var info = albumInfo[id];
+			this.panel.find('.albumend .' + id + ' .xcjs p').html(info.title);
+			this.panel.find('.albumend .' + id + ' .xcjs span').html('<i>' + info.length + '</i>张图片');
+			this.panel.find('.albumend .' + id + ' .xcfm').html('<a href="' + info.url + '"><img src="' + info.cover + '" width="170" height="170" /></a>');
+		}else{
+			this.panel.find('.albumend .' + id + ' .xcjs p').html('');
+			this.panel.find('.albumend .' + id + ' .xcjs span').html('');
+			this.panel.find('.albumend .' + id + ' .xcfm').html('没有了');
+		}
 	}
 
 };
