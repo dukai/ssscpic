@@ -375,6 +375,11 @@ PhotoAlbum.prototype = {
 		this.panel.find('.sigez.tplb').click(function(e){
 			self.showList();
 		})
+
+		this.panel.find('.sigez.ytck').click(function(e){
+			window.open(self.options.imglist[self.pointer].img_big);
+		})
+
 		//绑定列表事件
 			//绑定列表内部事件，分别为，显示指定内容，上一个，下一个
 		this.panel.find(this.options.thumblist).click(function(e){
@@ -447,6 +452,7 @@ PhotoAlbum.prototype = {
 			self.imgLoading = false;
 			var size = self.calculateSize(0, 460, this);
 			self.panel.find(self.options.coverImage).attr('src', this.src).attr('width', size.width).attr('height', size.height);
+			self.panel.find('.tWrapper ul li.comxs a').attr('href', imgres.img_big);
 			self.hideLoading();
 		};
 		
