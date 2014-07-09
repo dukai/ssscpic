@@ -127,15 +127,15 @@ var imglist = [
 		intro: '新加坡：北京“炮轰”日本 马英九打了助攻'
 	},
 	{
-		img_big: 'http://c.hiphotos.baidu.com/image/pic/item/4bed2e738bd4b31c55c19f2385d6277f9f2ff8ad.jpg',
-		img_small: 'http://c.hiphotos.baidu.com/image/pic/item/4bed2e738bd4b31c55c19f2385d6277f9f2ff8ad.jpg',
-		img_orig: 'http://c.hiphotos.baidu.com/image/pic/item/4bed2e738bd4b31c55c19f2385d6277f9f2ff8ad.jpg',
+		img_big: 'http://ww4.sinaimg.cn/mw690/695d1254gw1egbycb4tzzj21kw2dcaq6.jpg',
+		img_small: 'http://ww4.sinaimg.cn/cmw205/695d1254gw1egbycb4tzzj21kw2dcaq6.jpg',
+		img_orig: 'http://ww4.sinaimg.cn/mw690/695d1254gw1egbycb4tzzj21kw2dcaq6.jpg',
 		intro: 'JavaScript（常简称为JS）是一门轻量级，解释型，具有第一级函数的面向对象语言，向来以Web网页的脚本语言而著称，但现在也可以用在许多非浏览器环境，例如node.js或者Apache CouchDB。'
 	},
 	{
-		img_big: 'http://e.hiphotos.baidu.com/image/pic/item/37d12f2eb9389b500b39ebca8735e5dde6116e67.jpg',
-		img_small: 'http://e.hiphotos.baidu.com/image/pic/item/37d12f2eb9389b500b39ebca8735e5dde6116e67.jpg',
-		img_orig: 'http://e.hiphotos.baidu.com/image/pic/item/37d12f2eb9389b500b39ebca8735e5dde6116e67.jpg',
+		img_big: 'http://ww3.sinaimg.cn/mw690/bd8431d6gw1efaezwfzcvj20j60cr77x.jpg',
+		img_small: 'http://ww3.sinaimg.cn/square/bd8431d6gw1efaezwfzcvj20j60cr77x.jpg',
+		img_orig: 'http://ww3.sinaimg.cn/mw690/bd8431d6gw1efaezwfzcvj20j60cr77x.jpg',
 		intro: 'JavaScript的标准是ECMAScript。进入2012年，所有现代主流浏览器都全面支持了ECMAScript 5.1版标准，旧有的浏览器至少都支持到了ECMAScript 3版。重量级的第六版标准也正在编制中。不同特性的新进展可以在dedicated wiki上跟进。'
 	},
 	{
@@ -308,6 +308,7 @@ PhotoAlbum.prototype = {
 			prev: '',
 			loading: '',
 			coverImage: '',
+			thumblist: '',
 			imglist: [],
 			albumInfo: {}
 		};
@@ -316,12 +317,15 @@ PhotoAlbum.prototype = {
 		this.pointer = 0;
 		this.total = this.options.imglist.length;
 		
-		this.listPager = new ListPager(this.totalPage);
+		this.listPager = new ListPager(this.total);
 		this.panel = $(this.options.container);
 		
 		this._initUI();
 
 		this._initEvents();
+
+		//显示图集第一张图片
+		this.go(0);
 	},
 	
 	_initUI: function(){
@@ -343,10 +347,7 @@ PhotoAlbum.prototype = {
 
 		//hide images thumbnails list
 
-		this.panel.find('.tulcomplt').hide();
-
-		//显示图集第一张图片
-		this.go(0);
+		this.panel.find(this.options.thumblist).hide();
 	},
 	
 	
@@ -525,7 +526,7 @@ PhotoAlbum.prototype = {
 		}
 
 		this.panel.find('.tulcomplt .pics_lef').html(html);
-		this.panel.find('.tulcomplt').show();
+		this.panel.find(this.options.thumblist).show();
 	},
 
 	end: function(){
