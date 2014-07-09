@@ -532,8 +532,12 @@ PhotoAlbum.prototype = {
 			//循环生成列表
 
 			var imgRes = this.options.imglist[i];
-
-			html += '<p> <a href="" title=""><img width="170" height="170" border="0" alt="" src="' + imgRes.img_small + '"></a> <a href="#" title="" class="p_mec" action="' + i + '"></a> </p>'
+			if(i == this.pointer){
+				html += '<p class="hov">'
+			}else{
+				html += '<p>'
+			}
+			html += '<a href="" title=""><img width="170" height="170" border="0" alt="" src="' + imgRes.img_small + '"></a> <a href="#" title="" class="p_mec" action="' + i + '"></a> </p>'
 		}
 
 		//判断是否显示下一页按钮
