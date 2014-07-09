@@ -401,6 +401,12 @@ PhotoAlbum.prototype = {
 			self.panel.find('.albumend').hide();
 			self.go(0);
 		});
+
+		this.panel.find('.sigez.sjfx.pr').hover(function(){
+			$(this).find('>div').show();
+		}, function(){
+			$(this).find('>div').hide();
+		});
 	},
 
 	next: function(){
