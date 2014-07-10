@@ -396,3 +396,5 @@
 .pics_lef p.next .p_mec:hover, .pics_lef p.prev .p_mec:hover{background:#66aa13;text-align:center;border: 0 none;}
 .thumblist{position: absolute;left:0;top:0;background: #fff;z-index: 999;width:855px;}
 .albumend{position: absolute;left:0;top:0;background: #fff;z-index: 999;width: 855px;display: none;}
+.fxbuts .slideshow{background-position: -357px -520px;}
+.fxbuts .slideshow:hover{background-position: -357px -595px;}

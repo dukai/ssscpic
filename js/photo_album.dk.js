@@ -390,7 +390,7 @@ PhotoAlbum.prototype = {
 				self.listPager.prev();
 			}else if(action == 'next'){
 				self.listPager.next();
-			}else{
+			}else if(!isNaN(parseInt(action))){
 				action = parseInt(action);
 				self.go(action);
 				self.hideList();
@@ -406,6 +406,10 @@ PhotoAlbum.prototype = {
 			$(this).find('>div').show();
 		}, function(){
 			$(this).find('>div').hide();
+		});
+
+		this.panel.find('.slideshow').click(function(){
+			self.hideList();
 		});
 	},
 
