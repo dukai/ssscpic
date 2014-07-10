@@ -384,7 +384,6 @@ PhotoAlbum.prototype = {
 			//绑定列表内部事件，分别为，显示指定内容，上一个，下一个
 		this.panel.find(this.options.thumblist).click(function(e){
 			var action = e.target.getAttribute('action')
-
 			if(action == 'prev'){
 				self.listPager.prev();
 			}else if(action == 'next'){
