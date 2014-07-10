@@ -286,7 +286,7 @@ EventEmitter.prototype = {
 		}else{
 			delete this._events[type];
 		}
-	},
+	}
 	
 };
 
@@ -385,7 +385,6 @@ PhotoAlbum.prototype = {
 		this.panel.find(this.options.thumblist).click(function(e){
 			var action = e.target.getAttribute('action')
 
-			console.log(action);
 			if(action == 'prev'){
 				self.listPager.prev();
 			}else if(action == 'next'){
@@ -395,6 +394,8 @@ PhotoAlbum.prototype = {
 				self.go(action);
 				self.hideList();
 			}
+
+			e.preventDefault();
 		});
 
 		this.panel.find('.replay').click(function(){
@@ -553,7 +554,7 @@ PhotoAlbum.prototype = {
 			}else{
 				html += '<p>'
 			}
-			html += '<a href="" title=""><img width="170" height="170" border="0" alt="" src="' + imgRes.img_small + '"></a> <a href="#" title="" class="p_mec" action="' + i + '"></a> </p>'
+			html += '<a href="#" title="#"><img width="170" height="170" border="0" alt="" src="' + imgRes.img_small + '"></a> <a href="#" title="" class="p_mec" action="' + i + '"></a> </p>'
 		}
 
 		//判断是否显示下一页按钮
