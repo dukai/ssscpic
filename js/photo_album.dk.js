@@ -4,17 +4,24 @@
 	|  | |(_) |_(_)| | | |_)|_|||| o |_/|\ 
 
 ********************************************/
+
+//图片列表
 var imglist = [
 	{
+		//大图片
 		img_big: 'http://e.hiphotos.baidu.com/image/h%3D1200%3Bcrop%3D0%2C0%2C1920%2C1200/sign=a7ef3f74a38b87d64f42af1d3738135b/c2fdfc039245d688c0cc3fe1a6c27d1ed31b24ac.jpg',
+		//小图片
 		img_small: 'http://e.hiphotos.baidu.com/image/h%3D1200%3Bcrop%3D0%2C0%2C1920%2C1200/sign=a7ef3f74a38b87d64f42af1d3738135b/c2fdfc039245d688c0cc3fe1a6c27d1ed31b24ac.jpg',
+		//原图
 		img_orig: 'http://e.hiphotos.baidu.com/image/h%3D1200%3Bcrop%3D0%2C0%2C1920%2C1200/sign=a7ef3f74a38b87d64f42af1d3738135b/c2fdfc039245d688c0cc3fe1a6c27d1ed31b24ac.jpg',
+
+		//介绍
 		intro: '近日，山东大学一组模仿类恶搞毕业照曝红网络，图片多是模仿电影海报类“对比照”，上传到社交媒体后便迅速获得过万点赞。'
 		
 	},
 	{
-		img_big: 'http://www.huabian.com/uploadfile/2014/0411/20140411113108945.jpg',
-		img_small: 'http://www.huabian.com/uploadfile/2014/0411/20140411113108945.jpg',
+		img_big: 'http://www.huabian.com/uploadfile/2014/0411/20140411113108945.jpg'
+,		img_small: 'http://www.huabian.com/uploadfile/2014/0411/20140411113108945.jpg',
 		img_orig: 'http://www.huabian.com/uploadfile/2014/0411/20140411113108945.jpg',
 		intro: '组模仿类恶搞毕业照曝红网络，图片多是模仿电影海报类“对比照”，上传到社交媒体后便迅速获得过万点赞。'
 	},
@@ -169,9 +176,9 @@ var imglist = [
 		intro: '朝鲜百人拉拉队将赴韩国 个个年轻貌美"思想过关"'
 	}
 ];
-
+//图集信息
 var albumInfo = {
-
+	//当前图集信息
 	current: {
 		cover: 'http://ww3.sinaimg.cn/mw690/53a56655jw1egqqxnz2wsj21hc0zk1ky.jpg',
 		url: '',
@@ -179,7 +186,9 @@ var albumInfo = {
 		title: '这是当前专题的标题',
 		tags: ['摄影师', '肖像', '遗言']
 	},
+	//上一个图集信息
 	prev: null,
+	//下一个图集信息
 	next: {
 		cover: 'http://ww3.sinaimg.cn/mw690/635191d5gw1ehi2a5yqg7j20sg0sjk19.jpg',
 		url: 'http://ww3.sinaimg.cn/mw690/635191d5gw1ehi2a5yqg7j20sg0sjk19.jpg',
@@ -298,25 +307,35 @@ PhotoAlbum.prototype = {
 	_initPhotoAlbum: function(options){
 		EventEmitter.call(this);
 		this.options = {
+			//容器选择器
 			container: '',
+			//下一个按钮选择器
 			next: '',
+			//上一个按钮选择器
 			prev: '',
+			//载入动画容器选择器
 			loading: '',
+			//封面图片选择器
 			coverImage: '',
+			//缩略图列表选择器
 			thumblist: '',
+			//图片列表数据
 			imglist: [],
+			//图集信息数据
 			albumInfo: {}
 		};
 		this.options = mix(this.options, options);
 		//current pointer to the image
 		this.pointer = 0;
+		//总数
 		this.total = this.options.imglist.length;
-		
+		//列表分页器
 		this.listPager = new ListPager(this.total);
+		//面板，所有内部dom均从面板对象获取，防止一个页面有多个对象时发生冲突
 		this.panel = $(this.options.container);
-		
+		//初始化UI
 		this._initUI();
-
+		//初始化事件
 		this._initEvents();
 
 		//显示图集第一张图片
@@ -358,24 +377,24 @@ PhotoAlbum.prototype = {
 		this.panel.find(this.options.next).click(function(){
 			self.next();
 		});
-
+		//缩略图列表下一个事件
 		this.listPager.on('next', function(e){
 			self.updateListUI(e);
 		});
-
+		//缩略图列表上一个事件
 		this.listPager.on('prev', function(e){
 			self.updateListUI(e);
 		});
-		
+		//显示事件
 		this.on('show', function(e){
 			self.panel.find('.intro').html(e.imageInfo.intro);
 			self.panel.find('.yeshu span').html(e.pointer + 1);
 		});
-
+		//显示列表
 		this.panel.find('.sigez.tplb').click(function(e){
 			self.showList();
 		})
-
+		//打开原图
 		this.panel.find('.sigez.ytck').click(function(e){
 			window.open(self.options.imglist[self.pointer].img_big);
 		})
@@ -396,23 +415,23 @@ PhotoAlbum.prototype = {
 
 			e.preventDefault();
 		});
-
+		//重新开始
 		this.panel.find('.replay').click(function(){
 			self.panel.find('.albumend').hide();
 			self.go(0);
 		});
-
+		//分享按钮
 		this.panel.find('.sigez.sjfx.pr').hover(function(){
 			$(this).find('>div').show();
 		}, function(){
 			$(this).find('>div').hide();
 		});
-
+		//返回幻灯模式
 		this.panel.find('.slideshow').click(function(){
 			self.hideList();
 		});
 	},
-
+	//下一个
 	next: function(){
 		this.emit('beforenext', {pointer: this.pointer});
 		if(this.pointer < this.total - 1){
@@ -424,7 +443,7 @@ PhotoAlbum.prototype = {
 		
 		
 	},
-
+	//上一个
 	prev: function(){
 		this.emit('beforeprev', {pointer: this.pointer});
 		if(this.pointer > 0){
@@ -434,14 +453,14 @@ PhotoAlbum.prototype = {
 		}
 		this.show(this.pointer);
 	},
-	
+	//定位到指定位置
 	go: function(pointer){
 		this.emit('beforego', {pointer: this.pointer});
 		this.pointer = pointer;
 		
 		this.show(this.pointer);
 	},
-
+	//展示
 	show: function(pointer){
 		var self = this;
 
@@ -479,7 +498,7 @@ PhotoAlbum.prototype = {
 
 		img.src = imgres.img_big;
 	},
-
+	//计算大小
 	calculateSize: function(maxWidth, maxHeight, img){
 		var hRatio;
 		var wRatio;
@@ -506,7 +525,7 @@ PhotoAlbum.prototype = {
 			width: w, height: h
 		}
 	},
-
+	//终止载入
 	abortLoading: function(){
 		if(window.stop !== undefined){
 			window.stop();
@@ -514,22 +533,23 @@ PhotoAlbum.prototype = {
 			document.execCommand("Stop", false);
 		}
 	},
-	
+	//显示加载动画
 	showLoading: function(){
 		//显示加载动画
 		this.panel.find(this.options.loading).show();
 	},
-	
+	//隐藏加载动画
 	hideLoading: function(){
 		//隐藏加载动画
 		this.panel.find(this.options.loading).hide();
 	},
-
+	//显示列表
 	showList: function(){
 		//根据pointer计算位置
 		var result = this.listPager.buildResult(this.listPager.getCurrentPage(this.pointer));
 		this.updateListUI(result);
 	},
+	//隐藏列表
 	hideList: function(){
 		this.panel.find(this.options.thumblist).hide();
 	},
@@ -565,7 +585,7 @@ PhotoAlbum.prototype = {
 		this.panel.find('.tulcomplt .pics_lef').html(html);
 		this.panel.find(this.options.thumblist).show();
 	},
-
+	//结束画面
 	end: function(){
 		//结束
 		this.emit("end", {});
@@ -577,7 +597,7 @@ PhotoAlbum.prototype = {
 		this.updateEndInfo('next');
 		this.updateEndInfo('prev');
 	},
-
+	//更新结束信息
 	updateEndInfo: function(id){
 		var albumInfo = this.options.albumInfo;
 		if(this.options.albumInfo[id]){
@@ -596,7 +616,7 @@ PhotoAlbum.prototype = {
 
 extend(PhotoAlbum, EventEmitter);
 
-
+//列表页分页器
 var ListPager = function(total){
 	this.total = total;
 	this._initListPager();
